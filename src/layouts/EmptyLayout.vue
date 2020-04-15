@@ -1,11 +1,11 @@
-<script>
-export default {};
-</script>
-
 <template>
   <div class="app-main-layout">
     <router-view />
     <div></div>
-    <el-button type="primary" icon="el-icon-edit"></el-button>
+    <el-button type="primary" icon="el-icon-edit">EmptyLayouts</el-button>
   </div>
 </template>
+
+<script>
+export default {};
+</script>

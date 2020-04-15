@@ -1,21 +1,34 @@
+import { minimatch } from 'prettier';
 <template>
   <div>
-    <template v-if="!blackSchema">
+    <template v-if="!blackSchema" class="menu-item">
       <el-menu
         :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
       >
-        <a href="#" @click.prevent="$emit('click')"><i class="el-icon-menu">Menu1</i></a>
         <el-menu-item index="1"
-          ><a href="#" @click.prevent="$emit('click2')"
-            ><i class="el-icon-menu">Menu</i></a
-          ></el-menu-item
-        >
-        <el-menu-item>Processing</el-menu-item>
+          ><a href="#" @click.prevent="$emit('click')"><i class="el-icon-menu"></i></a
+        ></el-menu-item>
+        <el-menu-item
+          ><el-button class="el-icon-search" circle plain type="info"></el-button
+        ></el-menu-item>
+        <el-menu-item
+          ><el-button class="el-icon-sell" circle plain type="warning" size="mini"></el-button
+        ></el-menu-item>
+        <el-menu-item
+          ><el-button class="el-icon-goods" circle plain type="primary" size="mini"></el-button
+        ></el-menu-item>
+        <el-menu-item
+          ><el-button class="el-icon-s-order" circle plain type="primary" size="mini"></el-button
+        ></el-menu-item>
+        <el-menu-item
+          ><el-button class="el-icon-s-data" circle plain type="primary" size="mini"></el-button
+        ></el-menu-item>
+        <el-menu-item><i class="el-icon-user" circle plain type="primary"></i></el-menu-item>
         <el-submenu index="2">
-          <template slot="title"><i class="el-icon-setting">Settings</i></template>
+          <template slot="title"><i class="el-icon-setting"></i></template>
           <el-menu-item index="2-1">Application</el-menu-item>
           <el-menu-item index="2-2">Profile</el-menu-item>
           <el-menu-item index="2-3">API</el-menu-item>
@@ -26,14 +39,11 @@
             <el-menu-item index="2-4-3">item three</el-menu-item>
           </el-submenu>
         </el-submenu>
-        <el-menu-item index="3" disabled>Info</el-menu-item>
-        <el-menu-item index="4"
-          ><a href="https://www.ele.me" target="_blank">Orders</a></el-menu-item
-        >
       </el-menu>
       <div class="line"></div>
     </template>
-    <template v-if="blackSchema">
+
+    <template v-if="blackSchema" class="menu-item">
       <el-menu
         :default-active="activeIndex2"
         class="el-menu-demo"
@@ -80,3 +90,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.menu-item {
+  background-color: red;
+}
+.menu-item-div {
+  color: red;
+}
+</style>
