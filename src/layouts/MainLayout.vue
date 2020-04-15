@@ -1,8 +1,8 @@
 <template>
   <div class="app-main-layout">
-    <Navbar @click="isOpen = !isOpen" />
-    <Sidebar v-model="isOpen" />
-    <main class="app-content" :class="{ full: !isOpen }">
+    <Navbar @click="isOpenSidebar = !isOpenSidebar" />
+    <Sidebar v-model="isOpenSidebar" />
+    <main class="app-content" :class="{ full: !isOpenSidebar }">
       <router-view />
     </main>
   </div>
@@ -18,7 +18,7 @@ export default {
     Sidebar,
   },
   data: () => ({
-    isOpen: true,
+    isOpenSidebar: true,
   }),
 };
 </script>

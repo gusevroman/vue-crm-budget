@@ -7,9 +7,8 @@
         mode="horizontal"
         @select="handleSelect"
       >
-        <a href="#" @click.prevent="$emit('click')"><i class="el-icon-menu">Menu1</i></a>
         <el-menu-item index="1"
-          ><a href="#" @click.prevent="$emit('click2')"
+          ><a href="#" @click.prevent="$emit('click')"
             ><i class="el-icon-menu">Menu</i></a
           ></el-menu-item
         >

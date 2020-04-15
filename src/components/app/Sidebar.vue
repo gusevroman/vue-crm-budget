@@ -1,7 +1,7 @@
 <template>
   <div>
-    <template v-if="!blackSchema" :class="{ open: value }">
-      <el-col :span="12">
+    <template v-if="!blackSchema && value">
+      <el-col :span="6">
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
@@ -43,7 +43,7 @@
       </el-col>
     </template>
 
-    <template v-if="blackSchema">
+    <template v-if="blackSchema && value">
       <el-col :span="12">
         <el-menu
           default-active="2"
@@ -100,19 +100,17 @@
 <script>
 export default {
   props: ['value'],
-  data() {
-    return {
-      blackSchema: false,
-      links: [
-        { title: 'Main', url: '/', exact: true },
-        { title: 'History', url: '/history' },
-        { title: 'Planning', url: '/planning' },
-        { title: 'New Record', url: '/record' },
-        { title: 'Categories', url: '/categories' },
-        { title: 'Settings', url: '/settings' },
-      ],
-    };
-  },
+  data: () => ({
+    blackSchema: false,
+    links: [
+      { title: 'Main', url: '/', exact: true },
+      { title: 'History', url: '/history' },
+      { title: 'Planning', url: '/planning' },
+      { title: 'New Record', url: '/record' },
+      { title: 'Categories', url: '/categories' },
+      { title: 'Settings', url: '/settings' },
+    ],
+  }),
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
