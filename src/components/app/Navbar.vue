@@ -1,37 +1,99 @@
-import { minimatch } from 'prettier';
+import router from '../../router';
 <template>
   <div>
-    <template v-if="!blackSchema" class="menu-item">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-menu-item index="1"
-          ><a href="#" @click.prevent="$emit('click')"><i class="el-icon-menu"></i></a
+    <template v-if="!blackSchema">
+      <el-menu class="el-menu-app" padding="10px" mode="horizontal">
+        <el-menu-item>
+          <el-button
+            class="el-icon-menu"
+            type="primary"
+            size="mini"
+            circle
+            plain
+            @click.prevent="$emit('click')"
+          >
+          </el-button>
+        </el-menu-item>
+        <el-menu-item
+          ><router-link class-active="active" to="/"
+            ><el-button
+              class="el-icon-search"
+              circle
+              plain
+              type="info"
+              size="mini"
+            ></el-button></router-link
         ></el-menu-item>
         <el-menu-item
-          ><el-button class="el-icon-search" circle plain type="info"></el-button
+          ><router-link key="/record" to="/record"
+            ><el-button
+              class="el-icon-plus"
+              circle
+              plain
+              type="warning"
+              size="mini"
+            ></el-button></router-link
         ></el-menu-item>
         <el-menu-item
-          ><el-button class="el-icon-sell" circle plain type="warning" size="mini"></el-button
+          ><router-link class-active="active" to="/planning"
+            ><el-button
+              class="el-icon-goods"
+              circle
+              plain
+              type="primary"
+              size="mini"
+            ></el-button></router-link
         ></el-menu-item>
         <el-menu-item
-          ><el-button class="el-icon-goods" circle plain type="primary" size="mini"></el-button
+          ><router-link class-active="active" to="/history"
+            ><el-button
+              class="el-icon-s-order"
+              circle
+              plain
+              type="primary"
+              size="mini"
+            ></el-button></router-link
         ></el-menu-item>
         <el-menu-item
-          ><el-button class="el-icon-s-order" circle plain type="primary" size="mini"></el-button
+          ><router-link class-active="active" to="/categories"
+            ><el-button
+              class="el-icon-s-data"
+              circle
+              plain
+              type="primary"
+              size="mini"
+            ></el-button></router-link
         ></el-menu-item>
         <el-menu-item
-          ><el-button class="el-icon-s-data" circle plain type="primary" size="mini"></el-button
+          ><router-link class-active="active" to="/profile" exact
+            ><el-button
+              class="el-icon-user"
+              circle
+              plain
+              type="primary"
+              size="mini"
+            ></el-button></router-link
         ></el-menu-item>
-        <el-menu-item><i class="el-icon-user" circle plain type="primary"></i></el-menu-item>
-        <el-submenu index="2">
-          <template slot="title"><i class="el-icon-setting"></i></template>
-          <el-menu-item index="2-1">Application</el-menu-item>
-          <el-menu-item index="2-2">Profile</el-menu-item>
-          <el-menu-item index="2-3">API</el-menu-item>
+
+        <el-submenu>
+          <template slot="title"><i class="el-icon-more-outline"></i></template>
+          <el-menu-item><i class="el-icon-setting"></i></el-menu-item>
+          <el-menu-item index="2-2"
+            ><router-link to="/profile"><i class="el-icon-user"></i> </router-link
+          ></el-menu-item>
+          <el-menu-item index="2-2"
+            ><router-link to="/profile"
+              ><el-button
+                class="el-icon-exit"
+                plain
+                type="danger"
+                size="mini"
+                @click.prevent="logout"
+                >EXIT</el-button
+              ></router-link
+            ></el-menu-item
+          >
+
           <el-submenu index="2-4">
             <template slot="title">item four</template>
             <el-menu-item index="2-4-1">item one</el-menu-item>
@@ -76,26 +138,20 @@ import { minimatch } from 'prettier';
 </template>
 <script>
 export default {
-  data() {
-    return {
-      activeIndex: '1',
-      activeIndex2: '1',
-      blackSchema: false,
-    };
-  },
+  data: () => ({
+    activeIndex: '1',
+    blackSchema: false,
+  }),
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    logout() {
+      this.$router.push('/login?message=logout');
     },
   },
 };
 </script>
 
-<style>
-.menu-item {
-  background-color: red;
-}
-.menu-item-div {
-  color: red;
+<style scoped>
+.el-menu-item {
+  padding: 10px;
 }
 </style>
