@@ -1,19 +1,20 @@
 <template>
   <div>
     <el-form
-      ref="ruleForm"
-      :model="ruleForm"
+      ref="loginForm"
+      :model="loginForm"
       status-icon
       :rules="rules"
       label-width="120px"
-      class="demo-ruleForm"
+      class="loginForm"
     >
-      <el-form-item label="Login" prop="login">
-        <el-input v-model="ruleForm.login" placeholder="Enter login"></el-input>
+      <el-form-item label="E-mail" prop="email">
+        <el-input v-model="loginForm.email" placeholder="Enter e-mail"></el-input>
       </el-form-item>
+
       <el-form-item label="Password" prop="pass">
         <el-input
-          v-model="ruleForm.pass"
+          v-model="loginForm.pass"
           type="password"
           autocomplete="off"
           placeholder="Enter password"
@@ -21,10 +22,17 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="success" plain size="mini" @click="submitForm('ruleForm')"
+        <el-button
+          class="btn-login"
+          type="success"
+          plain
+          size="mini"
+          @click="submitLogin('loginForm')"
           >Sign-In</el-button
         >
-        <el-button type="warning" plain size="mini" @click="register()">Register</el-button>
+        <router-link to="/register">
+          <el-button class="btn-login" type="warning" plain size="mini">Register</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -32,48 +40,53 @@
 
 <script>
 export default {
+  name: 'Login',
   data() {
-    const validateLogin = (rule, value, callback) => {
-      if (value.length < 3 || value.length > 15) {
-        callback(new Error('Length login should be 3 to 15'));
+    const minLenghtPass = 6;
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Please input password'));
+      } else if (value.length < minLenghtPass) {
+        callback(new Error(`Length login should be more than ${minLenghtPass} symbols`));
       }
       callback();
     };
-    const validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input the password'));
-      } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass');
-        }
-        callback();
-      }
-    };
     return {
-      ruleForm: {
-        login: '',
+      loginForm: {
+        email: '',
         pass: '',
       },
       rules: {
-        login: [{ required: true, validator: validateLogin, trigger: 'blur' }],
+        email: [
+          { required: true, message: 'Please input email address', trigger: 'blur' },
+          {
+            type: 'email',
+            message: 'Please input correct email address',
+            trigger: ['blur', 'change'],
+          },
+        ],
         pass: [{ required: true, validator: validatePass, trigger: 'blur' }],
       },
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    submitLogin(form) {
+      this.$refs[form].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          console.log('submit!');
+          this.$router.push('/');
         } else {
           console.log('error submit!!');
           return false;
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
   },
 };
 </script>
+
+<style scoped>
+.btn-login {
+  margin: 0 10px 0 0;
+}
+</style>
