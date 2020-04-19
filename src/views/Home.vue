@@ -5,7 +5,7 @@
 
       <el-button type="primary" mini circle icon="el-icon-refresh-right"></el-button>
     </div>
-    <el-table :data="tableData" style="width: 100%;" :row-class-name="tableRowClassName">
+    <el-table :data="tableData">
       <el-table-column prop="date" label="Date" width="180"> </el-table-column>
       <el-table-column prop="name" label="Name" width="180"> </el-table-column>
       <el-table-column prop="address" label="Address"> </el-table-column>
@@ -43,16 +43,7 @@ export default {
       ],
     };
   },
-  methods: {
-    tableRowClassName({ rowIndex }) {
-      if (rowIndex === 1) {
-        return 'warning-row';
-      } else if (rowIndex === 3) {
-        return 'success-row';
-      }
-      return '';
-    },
-  },
+  methods: {},
 };
 </script>
 

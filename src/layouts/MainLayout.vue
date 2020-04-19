@@ -18,7 +18,7 @@ export default {
     Sidebar,
   },
   data: () => ({
-    isOpenSidebar: true,
+    isOpenSidebar: false,
   }),
 };
 </script>
