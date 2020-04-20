@@ -9,7 +9,7 @@
       class="loginForm"
     >
       <el-form-item label="E-mail" prop="email">
-        <el-input v-model="loginForm.email" placeholder="Enter e-mail"></el-input>
+        <el-input v-model="loginForm.email" type="email" placeholder="Enter e-mail"></el-input>
       </el-form-item>
 
       <el-form-item label="Password" prop="pass">
@@ -73,10 +73,10 @@ export default {
     submitLogin(form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          console.log('submit!');
+          this.$message({ message: 'Welcome', type: 'success' });
           this.$router.push('/');
         } else {
-          console.log('error submit!!');
+          this.$message({ message: 'Please input e-mail or password again', type: 'error' });
           return false;
         }
       });
