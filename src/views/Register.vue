@@ -106,10 +106,10 @@ export default {
     submitRegister(form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          this.$message({ message: 'You are registered successfully', type: 'success' });
           this.$router.push('/');
         } else {
-          alert('error submit!!');
+          this.$message({ message: 'Registration error', type: 'error' });
           return false;
         }
       });
