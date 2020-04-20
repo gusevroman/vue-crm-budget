@@ -1,11 +1,10 @@
+<template>
+  <div class="app-main-layout">
+    <h2>What's up, my friend!</h2>
+    <router-view />
+  </div>
+</template>
+
 <script>
 export default {};
 </script>
-
-<template>
-  <div class="app-main-layout">
-    <router-view />
-    <div></div>
-    <el-button type="primary" icon="el-icon-edit"></el-button>
-  </div>
-</template>

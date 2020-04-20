@@ -1,3 +1,5 @@
 <template>
-  <div></div>
+  <div>
+    <h3>Planning</h3>
+  </div>
 </template>

@@ -1,3 +1,5 @@
 <template>
-  <div></div>
+  <div>
+    <h3>New Record</h3>
+  </div>
 </template>
