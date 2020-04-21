@@ -12,9 +12,9 @@
         <el-input v-model="loginForm.email" type="email" placeholder="Enter e-mail"></el-input>
       </el-form-item>
 
-      <el-form-item label="Password" prop="pass">
+      <el-form-item label="Password" prop="password">
         <el-input
-          v-model="loginForm.pass"
+          v-model="loginForm.password"
           type="password"
           autocomplete="off"
           placeholder="Enter password"
@@ -54,7 +54,7 @@ export default {
     return {
       loginForm: {
         email: '',
-        pass: '',
+        password: '',
       },
       rules: {
         email: [
@@ -65,14 +65,20 @@ export default {
             trigger: ['blur', 'change'],
           },
         ],
-        pass: [{ required: true, validator: validatePass, trigger: 'blur' }],
+        password: [{ required: true, validator: validatePass, trigger: 'blur' }],
       },
     };
   },
   methods: {
     submitLogin(form) {
-      this.$refs[form].validate((valid) => {
+      this.$refs[form].validate(async (valid) => {
         if (valid) {
+          const formData = {
+            email: this.loginForm.email,
+            password: this.loginForm.password,
+          };
+          await this.$store.dispatch('login', formData);
+
           this.$message({ message: 'Welcome', type: 'success' });
           this.$router.push('/');
         } else {
