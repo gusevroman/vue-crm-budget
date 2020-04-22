@@ -11,17 +11,20 @@
       <el-form-item label="Login" prop="login">
         <el-input v-model="regForm.login" type="text" placeholder="Enter login"></el-input>
       </el-form-item>
+
       <el-form-item label="Email" prop="email">
         <el-input v-model="regForm.email" type="email" placeholder="Enter email"></el-input>
       </el-form-item>
-      <el-form-item id="passs" label="Password" prop="pass">
+
+      <el-form-item id="passs" label="Password" prop="password">
         <el-input
-          v-model="regForm.pass"
+          v-model="regForm.password"
           type="password"
           autocomplete="off"
           placeholder="Enter password"
         ></el-input>
       </el-form-item>
+
       <el-form-item label="Confirm" prop="checkPass">
         <el-input
           v-model="regForm.checkPass"
@@ -30,9 +33,11 @@
           placeholder="Please, enter password again"
         ></el-input>
       </el-form-item>
+
       <el-form-item label=" " prop="agreeRules">
         <el-checkbox v-model="regForm.agreeRules" label="I agree with rules"></el-checkbox>
       </el-form-item>
+
       <el-form-item>
         <el-button class="btn" type="success" plain size="mini" @click="submitRegister('regForm')"
           >Register</el-button
@@ -70,7 +75,7 @@ export default {
     const validateCheckPass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('Please input confirm password again'));
-      } else if (value !== this.regForm.pass) {
+      } else if (value !== this.regForm.password) {
         callback(new Error("Two inputs don't match!"));
       }
       callback();
@@ -79,13 +84,12 @@ export default {
       regForm: {
         login: '',
         email: '',
-        pass: '',
+        password: '',
         checkPass: '',
-        agreeRules: false,
-        agree: [],
+        agreeRules: '',
       },
       rules: {
-        login: [{ required: true, validator: validateLogin, trigger: 'blur' }],
+        login: [{ required: true, validator: validateLogin, trigger: 'change' }],
         email: [
           { required: true, message: 'Input e-mail address', trigger: 'blur' },
           {
@@ -94,7 +98,7 @@ export default {
             trigger: ['blur', 'change'],
           },
         ],
-        pass: [{ required: true, validator: validatePass, trigger: 'blur' }],
+        password: [{ required: true, validator: validatePass, trigger: 'blur' }],
         checkPass: [{ required: true, validator: validateCheckPass, trigger: 'blur' }],
         agreeRules: [
           { required: true, message: 'You should be agree with rules', trigger: 'change' },
@@ -104,8 +108,14 @@ export default {
   },
   methods: {
     submitRegister(form) {
-      this.$refs[form].validate((valid) => {
+      this.$refs[form].validate(async (valid) => {
         if (valid) {
+          const formData = {
+            email: this.regForm.email,
+            password: this.regForm.password,
+            login: this.regForm.login,
+          };
+          await this.$store.dispatch('register', formData);
           this.$message({ message: 'You are registered successfully', type: 'success' });
           this.$router.push('/');
         } else {
