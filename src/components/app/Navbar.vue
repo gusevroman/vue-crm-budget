@@ -65,22 +65,13 @@
         ></el-menu-item>
 
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-more-outline"></i></template>
+          <template slot="title"><i class="el-icon-more"></i></template>
           <el-menu-item index="1-1"><i class="el-icon-setting"></i></el-menu-item>
           <el-menu-item index="1-2"
             ><router-link to="/profile"><i class="el-icon-user"></i></router-link
           ></el-menu-item>
-          <el-menu-item index="1-3"
-            ><router-link to="/profile"
-              ><el-button
-                class="el-icon-exit"
-                plain
-                type="danger"
-                size="mini"
-                @click.prevent="logout"
-                >EXIT
-              </el-button>
-            </router-link>
+          <el-menu-item index="1-3">
+            <el-button plain type="danger" size="mini" @click.prevent="logout">EXIT</el-button>
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -106,7 +97,8 @@ export default {
     blackSchema: false,
   }),
   methods: {
-    logout() {
+    async logout() {
+      await this.$store.dispatch('logout');
       this.$router.push('/login?message=logout');
     },
   },
@@ -115,6 +107,6 @@ export default {
 
 <style scoped>
 .el-menu-item {
-  padding: 10px;
+  padding: 0 7px 0 7px;
 }
 </style>
