@@ -6,5 +6,20 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    error() {
+      return this.$store.getters.error;
+    },
+  },
+  watch: {
+    error(fbError) {
+      this.$message({
+        message: fbError.message || 'Something went wrong. Please try again.',
+        type: 'error',
+        duration: 5000,
+      });
+    },
+  },
+};
 </script>
