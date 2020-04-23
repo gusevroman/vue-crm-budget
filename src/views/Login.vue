@@ -77,10 +77,14 @@ export default {
             email: this.loginForm.email,
             password: this.loginForm.password,
           };
-          await this.$store.dispatch('login', formData);
-
-          this.$message({ message: 'Welcome', type: 'success' });
-          this.$router.push('/');
+          try {
+            await this.$store.dispatch('login', formData);
+            this.$message({ message: 'Welcome', type: 'success' });
+            this.$router.push('/');
+          } catch (error) {
+            console.log(error);
+            throw error;
+          }
         } else {
           this.$message({ message: 'Please input e-mail or password again', type: 'error' });
           return false;
