@@ -65,7 +65,7 @@
         ></el-menu-item>
 
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-more"></i></template>
+          <template slot="title">{{ name }}</template>
           <el-menu-item index="1-1"><i class="el-icon-setting"></i></el-menu-item>
           <el-menu-item index="1-2"
             ><router-link to="/profile"><i class="el-icon-user"></i></router-link
@@ -96,10 +96,15 @@ export default {
   data: () => ({
     blackSchema: false,
   }),
+  computed: {
+    name() {
+      return this.$store.getters.info.login;
+    },
+  },
   methods: {
     async logout() {
       await this.$store.dispatch('logout');
-      this.$router.push('/login?message=logout');
+      this.$router.push('/login?message=logout'); //tess___Hi!!
     },
   },
 };
@@ -107,6 +112,6 @@ export default {
 
 <style scoped>
 .el-menu-item {
-  padding: 0 7px 0 7px;
+  padding: 0 5px 0 5px;
 }
 </style>
