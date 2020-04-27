@@ -1,9 +1,18 @@
 <template>
   <div>
     <h3>Add a note</h3>
-    <el-form ref="formRecord" class="form-record">
+
+    <el-form ref="formRecord" v-loading="loading" class="form-record">
       <el-form-item>
-        <el-select></el-select>
+        <el-select v-model="category" placeholder="Select category">
+          <el-option
+            v-for="c in categories"
+            :id="c.id"
+            :key="c.id"
+            :label="c.label"
+            :category="c.category"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-radio-group v-model="radio" fill="orange">
@@ -12,10 +21,15 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <el-input-number v-model="summa" :min="1" :max="999999"></el-input-number>
+        <el-input-number v-model="amount" type="number" :min="1" :max="999999"></el-input-number>
       </el-form-item>
       <el-form-item>
-        <el-input placeholder="Enter description"></el-input>
+        <el-input
+          v-model="description"
+          placeholder="Enter description"
+          type="textarea"
+          autosize
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <el-button class="btn-add" type="warning" plain icon="el-icon-plus" circle></el-button>
@@ -27,9 +41,20 @@
 <script>
 export default {
   data: () => ({
+    loading: true,
     radio: 'outcome',
-    summa: 50,
+    amount: 50,
+    description: '',
+    category: null,
   }),
+  async mounted() {
+    this.categories = await this.$store.dispatch('fetchCategories');
+    this.loading = false;
+
+    if (this.categories.length) {
+      this.category = this.categories[0].id;
+    }
+  },
   methods: {},
 };
 </script>

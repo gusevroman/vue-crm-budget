@@ -36,7 +36,7 @@
         <el-menu-item
           ><router-link class-active="active" to="/planning"
             ><el-button
-              class="el-icon-goods"
+              class="el-icon-s-data"
               circle
               plain
               type="primary"
@@ -56,7 +56,7 @@
         <el-menu-item
           ><router-link class-active="active" to="/categories"
             ><el-button
-              class="el-icon-s-data"
+              class="el-icon-document-copy"
               circle
               plain
               type="primary"
