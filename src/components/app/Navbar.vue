@@ -111,6 +111,11 @@ export default {
 </script>
 
 <style scoped>
+.el-menu-app {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .el-menu-item {
   padding: 0 5px 0 5px;
 }
