@@ -17,7 +17,6 @@ export default {
       try {
         const uid = await dispatch('getUid');
         await firebase.database().ref(`users/${uid}/categories`).child(id).update({ title });
-        return { title, id };
       } catch (error) {
         commit('setError', error);
         throw error;
