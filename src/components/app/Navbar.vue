@@ -104,13 +104,18 @@ export default {
   methods: {
     async logout() {
       await this.$store.dispatch('logout');
-      this.$router.push('/login?message=logout'); //tess___Hi!!
+      this.$router.push('/login?message=logout');
     },
   },
 };
 </script>
 
 <style scoped>
+.el-menu-app {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .el-menu-item {
   padding: 0 5px 0 5px;
 }
