@@ -4,7 +4,11 @@
       <h3>Categories</h3>
     </div>
     <CreateCategory />
-    <EditCategory />
+    <EditCategory
+      :key="categories.length + updateCount"
+      :categories="categories"
+      @updated="updateCategories"
+    />
   </div>
 </template>
 
@@ -18,7 +22,24 @@ export default {
     CreateCategory,
     EditCategory,
   },
-  data: () => ({}),
-  methods: {},
+  data: () => ({
+    loading: true,
+    categories: [],
+    updateCount: 0,
+  }),
+  async mounted() {
+    this.categories = await this.$store.dispatch('fetchCategories');
+    this.loading = false;
+  },
+  methods: {
+    addNewCategory(category) {
+      this.categories.push(category);
+    },
+    updateCategories(category) {
+      const idx = this.categories.findIndex((c) => c.id === category.id);
+      this.categories[idx].title = category.title;
+      this.updateCount++;
+    },
+  },
 };
 </script>
