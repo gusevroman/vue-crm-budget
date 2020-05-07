@@ -45,7 +45,6 @@ export default {
     loading: true,
     title: '',
     current: null,
-    select: null,
   }),
   watch: {
     current(category) {
