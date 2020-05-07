@@ -3,9 +3,10 @@
     <div>
       <h3>Categories</h3>
     </div>
-    <CreateCategory />
+    <CreateCategory @created="addNewCategory" />
     <EditCategory
       :key="categories.length + updateCount"
+      v-loading="loading"
       :categories="categories"
       @updated="updateCategories"
     />
