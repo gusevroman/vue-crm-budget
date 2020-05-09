@@ -2,8 +2,11 @@
   <div>
     <h3>Add a note</h3>
 
-    <el-form ref="formRecord" v-loading="loading" class="form-record">
-      <el-form-item>
+    <el-form v-loading="loading" class="form-record">
+      <p v-if="!categories.length">
+        No categories yet. <router-link to="/categories">Add new category</router-link>
+      </p>
+      <el-form-item v-else>
         <el-select v-model="category" placeholder="Select category">
           <el-option
             v-for="c in categories"
@@ -40,20 +43,21 @@
 
 <script>
 export default {
+  name: 'Record',
   data: () => ({
     loading: true,
+    categories: [],
+    category: null,
     radio: 'outcome',
     amount: 50,
     description: '',
-    category: null,
   }),
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories');
-    this.loading = false;
-
     if (this.categories.length) {
-      this.category = this.categories[0].id;
+      this.category = this.categories[0].title;
     }
+    this.loading = false;
   },
   methods: {},
 };
@@ -64,7 +68,5 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.btn-add {
 }
 </style>

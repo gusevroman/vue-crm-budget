@@ -13,14 +13,15 @@
             placeholder="New category"
             autofocus="true"
           ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="success"
-            icon="el-icon-plus"
-            circle
-            @click.prevent="submitHandler"
-          ></el-button>
+          <el-form-item class="btn">
+            <el-button
+              type="success"
+              icon="el-icon-plus"
+              circle
+              size="mini"
+              @click.prevent="addCategory"
+            ></el-button>
+          </el-form-item>
         </el-form-item>
       </el-form>
     </template>
@@ -35,7 +36,7 @@ export default {
     };
   },
   methods: {
-    async submitHandler() {
+    async addCategory() {
       if (this.title.length <= 2) {
         this.$message({ message: 'Please, repeat the name of the category', type: 'error' });
       } else {
@@ -54,3 +55,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.2rem;
+}
+.el-button:hover {
+  cursor: pointer;
+}
+</style>
