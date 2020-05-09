@@ -54,7 +54,7 @@ export default {
     },
   },
   mounted() {
-    if (this.categories.length > 0) {
+    if (this.categories.length) {
       this.current = this.categories[0].title;
     }
   },
