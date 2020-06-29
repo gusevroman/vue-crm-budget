@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import auth from './auth';
 import info from './info';
 import record from './record';
 import category from './category';
+import URLCurrency from '../services/constants';
 
 Vue.use(Vuex);
 
@@ -22,9 +24,7 @@ export default new Vuex.Store({
   actions: {
     async fetchCurrency() {
       const key = process.env.API_CURRENCY_KEY;
-      const res = await fetch(
-        `https://free.currconv.com/api/v7/convert?q=USD_RUB&compact=ultra&apiKey=${key}`
-      );
+      const res = await fetch(`${URLCurrency}=${key}`);
       return await res.json();
     },
   },

@@ -2,7 +2,7 @@
   <div>
     <el-form>
       <el-form-item label="Edit category:">
-        <el-select v-model="current">
+        <el-select v-model="currentCategory">
           <el-option v-for="c of categories" :key="c.id" :value="c.title">{{ c.title }}</el-option>
         </el-select>
       </el-form-item>
@@ -15,8 +15,9 @@
           class="btn-delete"
           type="danger"
           icon="el-icon-delete"
-          size="mini"
+          plain
           circle
+          size="mini"
           @click.prevent="deleteCategory"
         ></el-button>
 
@@ -24,8 +25,9 @@
           class="btn-edit"
           type="warning"
           icon="el-icon-edit"
-          size="mini"
+          plain
           circle
+          size="mini"
           @click.prevent="updateCategory"
         ></el-button>
       </el-form-item>
@@ -44,18 +46,18 @@ export default {
   data: () => ({
     loading: true,
     title: '',
-    current: null,
+    currentCategory: null,
   }),
   watch: {
-    current(category) {
+    currentCategory(category) {
       const { title } = this.categories.find((c) => c.title === category);
-      this.current = title;
+      this.currentCategory = title;
       this.title = title;
     },
   },
   mounted() {
     if (this.categories.length) {
-      this.current = this.categories[0].title;
+      this.currentCategory = this.categories[0].title;
     }
   },
   methods: {
@@ -64,7 +66,7 @@ export default {
         this.$message({ message: 'Please, repeat the name of the category', type: 'error' });
       } else {
         try {
-          const { id } = this.categories.find((c) => c.title === this.current);
+          const { id } = this.categories.find((c) => c.title === this.currentCategory);
           const categoryData = { id: id, title: this.title };
           await this.$store.dispatch('updateCategory', categoryData);
           this.$message({ message: 'Category updated successfully', type: 'success' });
@@ -74,9 +76,13 @@ export default {
         }
       }
     },
-    deleteCategory() {
+    async deleteCategory() {
       try {
+        const { id } = this.categories.find((c) => c.title === this.currentCategory);
+        const categoryData = { id: id, title: this.title };
+        await this.$store.dispatch('deleteCategory', categoryData);
         this.$message({ message: `Category ${this.title} was deleted`, type: 'success' });
+        this.$emit('updated', categoryData);
       } catch (error) {
         this.$message({ message: 'Anything wrong, please repeat', type: 'error' });
       }

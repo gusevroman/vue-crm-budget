@@ -32,5 +32,14 @@ export default {
         throw error;
       }
     },
+    async deleteCategory({ commit, dispatch }, { id }) {
+      try {
+        const uid = await dispatch('getUid');
+        await firebase.database().ref(`/users/${uid}/categories`).child(id).remove();
+      } catch (error) {
+        commit('setError', error);
+        throw error;
+      }
+    },
   },
 };
