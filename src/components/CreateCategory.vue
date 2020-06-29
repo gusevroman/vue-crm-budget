@@ -18,6 +18,7 @@
               type="success"
               icon="el-icon-plus"
               circle
+              plain
               size="mini"
               @click.prevent="addCategory"
             ></el-button>
