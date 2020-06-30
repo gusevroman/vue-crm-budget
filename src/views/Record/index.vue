@@ -23,7 +23,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-radio-group v-model="typeRecord" size="medium" fill="orange">
+        <el-radio-group v-model="type" size="medium" fill="orange">
           <el-radio-button label="income">income</el-radio-button>
           <el-radio-button label="expense">expense</el-radio-button>
         </el-radio-group>
@@ -72,14 +72,14 @@ export default {
     categories: [],
     category: null,
     label: null,
-    typeRecord: 'expense',
+    type: 'expense',
     amount: 50,
     description: '',
   }),
   computed: {
     ...mapGetters(['info']),
     allowCreateRecord() {
-      return this.info.bill >= this.amount;
+      return this.info.bill >= this.amount || this.type === 'income';
     },
   },
   async mounted() {
@@ -90,6 +90,11 @@ export default {
     this.loading = false;
   },
   methods: {
+    resetForm() {
+      this.description = '';
+      this.amount = 50;
+      this.type = 'expense';
+    },
     async addRecord() {
       if (!this.description.trim().length) {
         this.$message({ message: 'Please, repeat the name of the record', type: 'error' });
@@ -99,10 +104,16 @@ export default {
             category: this.category,
             amount: this.amount,
             description: this.description,
-            typeRecord: this.typeRecord,
+            type: this.type,
             date: new Date().toJSON(),
           });
+
+          const bill =
+            this.type === 'income' ? this.info.bill + this.amount : this.info.bill - this.amount;
+          await this.$store.dispatch('updateInfo', { bill });
+
           this.$message({ message: 'Record created', type: 'success' });
+          this.resetForm();
         } catch (error) {
           this.$message({ message: 'Anything wrong, record not created', type: 'error' });
         }
