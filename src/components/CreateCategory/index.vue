@@ -45,9 +45,9 @@ export default {
           const category = await this.$store.dispatch('createCategory', {
             title: this.title,
           });
+          this.$emit('created', category);
           this.title = '';
           this.$message({ message: 'Category created', type: 'success' });
-          this.$emit('created', category);
         } catch (error) {
           this.$message({ message: 'Anything wrong, please repeat', type: 'error' });
         }

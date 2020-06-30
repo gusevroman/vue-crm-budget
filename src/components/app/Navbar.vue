@@ -66,10 +66,13 @@
 
         <el-submenu index="1">
           <template slot="title">{{ name }}</template>
+          <template slot="title"> ${{ bill }}</template>
           <el-menu-item index="1-1"><i class="el-icon-setting"></i></el-menu-item>
           <el-menu-item index="1-2"
-            ><router-link to="/profile"><i class="el-icon-user"></i></router-link
-          ></el-menu-item>
+            ><router-link to="/profile"
+              ><i class="el-icon-user"> ${{ bill }}</i></router-link
+            ></el-menu-item
+          >
           <el-menu-item index="1-3">
             <el-button plain type="danger" size="mini" @click.prevent="logout">EXIT</el-button>
           </el-menu-item>
@@ -99,6 +102,9 @@ export default {
   computed: {
     name() {
       return this.$store.getters.info.login;
+    },
+    bill() {
+      return this.$store.getters.info.bill;
     },
   },
   methods: {

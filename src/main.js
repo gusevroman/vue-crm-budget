@@ -7,7 +7,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
 
 import App from './App.vue';
-import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import firebaseConfig from './services/firebase';

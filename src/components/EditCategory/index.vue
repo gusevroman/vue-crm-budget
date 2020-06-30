@@ -69,8 +69,8 @@ export default {
           const { id } = this.categories.find((c) => c.title === this.currentCategory);
           const categoryData = { id: id, title: this.title };
           await this.$store.dispatch('updateCategory', categoryData);
-          this.$message({ message: 'Category updated successfully', type: 'success' });
           this.$emit('updated', categoryData);
+          this.$message({ message: 'Category updated successfully', type: 'success' });
         } catch (error) {
           this.$message({ message: 'Anything wrong, please repeat', type: 'error' });
         }
@@ -81,8 +81,8 @@ export default {
         const { id } = this.categories.find((c) => c.title === this.currentCategory);
         const categoryData = { id: id, title: this.title };
         await this.$store.dispatch('deleteCategory', categoryData);
-        this.$message({ message: `Category ${this.title} was deleted`, type: 'success' });
         this.$emit('updated', categoryData);
+        this.$message({ message: `Category ${this.title} was deleted`, type: 'success' });
       } catch (error) {
         this.$message({ message: 'Anything wrong, please repeat', type: 'error' });
       }
