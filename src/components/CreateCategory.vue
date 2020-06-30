@@ -20,7 +20,7 @@
               circle
               plain
               size="mini"
-              @click.prevent="addCategory"
+              @click="addCategory"
             ></el-button>
           </el-form-item>
         </el-form-item>

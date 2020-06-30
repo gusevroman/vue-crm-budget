@@ -5,7 +5,7 @@ import auth from './auth';
 import info from './info';
 import record from './record';
 import category from './category';
-import URLCurrency from '../services/constants';
+import { URLCurrency } from '../services/constants';
 
 Vue.use(Vuex);
 
