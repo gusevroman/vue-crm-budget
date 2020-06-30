@@ -79,8 +79,7 @@ export default {
   computed: {
     ...mapGetters(['info']),
     allowCreateRecord() {
-      return true;
-      // console.log('this.info', this.info.bill);
+      return this.info.bill >= this.amount;
     },
   },
   async mounted() {
@@ -91,21 +90,24 @@ export default {
     this.loading = false;
   },
   methods: {
-    addRecord() {
+    async addRecord() {
       if (!this.description.trim().length) {
         this.$message({ message: 'Please, repeat the name of the record', type: 'error' });
-        console.log('addRecord>>>', this.description);
-      } else {
+      } else if (this.allowCreateRecord) {
         try {
-          // const category = await this.$store.dispatch('createCategory', {
-          //   title: this.title,
-          // });
-          // this.title = '';
+          await this.$store.dispatch('createRecord', {
+            category: this.category,
+            amount: this.amount,
+            description: this.description,
+            typeRecord: this.typeRecord,
+            date: new Date().toJSON(),
+          });
           this.$message({ message: 'Record created', type: 'success' });
-          // this.$emit('created', category);
         } catch (error) {
           this.$message({ message: 'Anything wrong, record not created', type: 'error' });
         }
+      } else {
+        this.$message({ message: 'Insufficient funds', type: 'error' });
       }
     },
   },
