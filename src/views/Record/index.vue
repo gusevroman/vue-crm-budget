@@ -65,6 +65,8 @@
 <script>
 import { mapGetters } from 'vuex';
 
+import { amountRecord } from '../../services/constants';
+
 export default {
   name: 'Record',
   data: () => ({
@@ -73,7 +75,7 @@ export default {
     category: null,
     label: null,
     type: 'expense',
-    amount: 50,
+    amount: +amountRecord,
     description: '',
   }),
   computed: {

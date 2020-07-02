@@ -3,25 +3,38 @@
     <template>
       <el-form>
         <el-form-item label="Add new category">
-          <el-input
-            v-model="title"
-            type="text"
-            maxlength="30"
-            minlength="3"
-            show-word-limit
-            prefix-icon="el-icon-edit"
-            placeholder="New category"
-            autofocus="true"
-          ></el-input>
-          <el-form-item class="btn">
-            <el-button
-              type="success"
-              icon="el-icon-plus"
-              circle
-              plain
-              size="mini"
-              @click="addCategory"
-            ></el-button>
+          <el-form-item>
+            <el-input
+              v-model="title"
+              type="text"
+              maxlength="30"
+              minlength="3"
+              show-word-limit
+              prefix-icon="el-icon-edit"
+              placeholder="Enter name of the new category"
+              autofocus="true"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item class="btn" label="Limit">
+            <el-form-item>
+              <el-input-number
+                v-model="limit"
+                type="number"
+                :min="1"
+                :max="999999"
+              ></el-input-number>
+            </el-form-item>
+
+            <el-form-item class="btn">
+              <el-button
+                type="success"
+                icon="el-icon-plus"
+                plain
+                circle
+                @click="addCategory"
+              ></el-button>
+            </el-form-item>
           </el-form-item>
         </el-form-item>
       </el-form>
@@ -30,10 +43,13 @@
 </template>
 
 <script>
+import { limitCategory } from '../../services/constants';
+
 export default {
   data() {
     return {
       title: '',
+      limit: +limitCategory,
     };
   },
   methods: {
@@ -44,9 +60,11 @@ export default {
         try {
           const category = await this.$store.dispatch('createCategory', {
             title: this.title,
+            limit: this.limit,
           });
           this.$emit('created', category);
           this.title = '';
+          this.limit = 1000;
           this.$message({ message: 'Category created', type: 'success' });
         } catch (error) {
           this.$message({ message: 'Anything wrong, please repeat', type: 'error' });
@@ -60,8 +78,8 @@ export default {
 <style scoped>
 .btn {
   display: flex;
-  justify-content: flex-end;
-  padding: 0.2rem;
+  justify-content: center;
+  padding: 1rem;
 }
 .el-button:hover {
   cursor: pointer;

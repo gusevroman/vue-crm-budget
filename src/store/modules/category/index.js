@@ -13,20 +13,23 @@ export default {
         throw error;
       }
     },
-    async updateCategory({ commit, dispatch }, { title, id }) {
+    async updateCategory({ commit, dispatch }, { title, limit, id }) {
       try {
         const uid = await dispatch('getUid');
-        await firebase.database().ref(`users/${uid}/categories`).child(id).update({ title });
+        await firebase.database().ref(`users/${uid}/categories`).child(id).update({ title, limit });
       } catch (error) {
         commit('setError', error);
         throw error;
       }
     },
-    async createCategory({ commit, dispatch }, { title }) {
+    async createCategory({ commit, dispatch }, { title, limit }) {
       try {
         const uid = await dispatch('getUid');
-        const category = await firebase.database().ref(`/users/${uid}/categories`).push({ title });
-        return { title, id: category.key };
+        const category = await firebase
+          .database()
+          .ref(`/users/${uid}/categories`)
+          .push({ title, limit });
+        return { title, limit, id: category.key };
       } catch (error) {
         commit('setError', error);
         throw error;
