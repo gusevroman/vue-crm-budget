@@ -1,15 +1,26 @@
 <template>
   <div>
-    <el-form>
+    <el-form class="edit-items">
       <el-form-item label="Edit category:">
         <el-select v-model="currentCategory">
           <el-option v-for="c of categories" :key="c.id" :value="c.title">{{ c.title }}</el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="New name the category:">
+      <el-form-item label="New name:">
         <el-input id="name" v-model="title" type="text" prefix-icon="el-icon-edit"></el-input>
       </el-form-item>
+
+      <el-form-item class="edit-limit" label="New limit:">
+        <el-input-number
+          id="limit"
+          v-model="limit"
+          type="number"
+          :min="1"
+          :max="999999"
+        ></el-input-number>
+      </el-form-item>
+
       <el-form-item class="btn-group">
         <el-button
           class="btn-delete"
@@ -17,7 +28,6 @@
           icon="el-icon-delete"
           plain
           circle
-          size="mini"
           @click.prevent="deleteCategory"
         ></el-button>
 
@@ -27,7 +37,6 @@
           icon="el-icon-edit"
           plain
           circle
-          size="mini"
           @click.prevent="updateCategory"
         ></el-button>
       </el-form-item>
@@ -36,6 +45,8 @@
 </template>
 
 <script>
+import limitCategory from '../../services/constants';
+
 export default {
   props: {
     categories: {
@@ -46,13 +57,15 @@ export default {
   data: () => ({
     loading: true,
     title: '',
+    limit: limitCategory,
     currentCategory: null,
   }),
   watch: {
     currentCategory(category) {
-      const { title } = this.categories.find((c) => c.title === category);
+      const { title, limit } = this.categories.find((c) => c.title === category);
       this.currentCategory = title;
       this.title = title;
+      this.limit = limit;
     },
   },
   mounted() {
@@ -67,7 +80,7 @@ export default {
       } else {
         try {
           const { id } = this.categories.find((c) => c.title === this.currentCategory);
-          const categoryData = { id: id, title: this.title };
+          const categoryData = { id: id, title: this.title, limit: this.limit };
           await this.$store.dispatch('updateCategory', categoryData);
           this.$emit('updated', categoryData);
           this.$message({ message: 'Category updated successfully', type: 'success' });
@@ -92,9 +105,18 @@ export default {
 </script>
 
 <style scoped>
+.edit-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.edit-limit {
+  display: flex;
+  justify-content: center;
+}
 .btn-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .el-button:hover {
   cursor: pointer;
