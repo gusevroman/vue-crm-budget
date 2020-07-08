@@ -41,10 +41,10 @@ const routes = [
     component: () => import('@/views/History'),
   },
   {
-    path: '/planning',
-    name: 'planning',
+    path: '/expense',
+    name: 'expense',
     meta: { layout: 'main' },
-    component: () => import('@/views/Planning'),
+    component: () => import('@/views/Expense'),
   },
   {
     path: '/profile',
