@@ -34,7 +34,7 @@
             ></el-button></router-link
         ></el-menu-item>
         <el-menu-item
-          ><router-link class-active="active" to="/planning"
+          ><router-link class-active="active" to="/expense"
             ><el-button
               class="el-icon-s-data"
               circle
