@@ -15,13 +15,10 @@
         <div v-for="cat of categories" :key="cat.id">
           <p>
             <strong>{{ cat.title }}</strong>
-            <el-tooltip
-              class="tooltips"
-              effect="dark"
-              :content="`${cat.spent} out of ${cat.limit}`"
-              placement="top"
-            >
+            <span class="cost-overrun"> {{ cat.spent }} out of {{ cat.limit }} </span>
+            <el-tooltip effect="dark" :content="`${cat.spent} out of ${cat.limit}`" placement="top">
               <el-progress
+                class="progress-bar"
                 :text-inside="true"
                 :stroke-width="20"
                 :percentage="cat.percentage"
@@ -77,3 +74,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.progress-bar {
+  font-weight: bold;
+}
+
+.cost-overrun {
+  font-style: italic;
+  font-size: 1rem;
+}
+</style>
