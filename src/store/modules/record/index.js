@@ -22,5 +22,14 @@ export default {
         throw error;
       }
     },
+    async deleteRecord({ dispatch, commit }, id) {
+      try {
+        const uid = await dispatch('getUid');
+        await firebase.database().ref(`/users/${uid}/records`).child(id).remove();
+      } catch (error) {
+        commit('setError', error);
+        throw error;
+      }
+    },
   },
 };
