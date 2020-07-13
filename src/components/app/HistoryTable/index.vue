@@ -41,14 +41,14 @@
         </template>
       </el-table-column>
       <el-table-column label="Operations" width="130" fixed="right">
-        <template slot-scope="">
+        <template slot-scope="operations">
           <el-button
             type="primary"
             icon="el-icon-view"
             circle
             plain
             size="mini"
-            @click="recordView"
+            @click="recordView(operations.row)"
           ></el-button>
 
           <el-button
@@ -57,8 +57,9 @@
             circle
             plain
             size="mini"
-            @click="recordEdit"
+            @click="recordEdit(operations.row)"
           ></el-button>
+
           <el-button
             type="danger"
             class="btn-delete"
@@ -66,7 +67,7 @@
             circle
             plain
             size="mini"
-            @click="recordDelete"
+            @click.prevent="recordDelete(operations.row)"
           ></el-button>
         </template>
       </el-table-column>
@@ -87,28 +88,23 @@ export default {
     loading: true,
   }),
   methods: {
-    recordView() {
-      console.log('click - recordView');
+    recordView(row) {
+      console.log('click - recordView', row);
     },
-    recordEdit() {
-      console.log('click - recordEdit');
+    recordEdit(row) {
+      console.log('click - recordEdit', row.amount);
     },
-    async recordDelete() {
-      console.log('click - recordDelete');
+    async recordDelete(row) {
       try {
-        console.log('this.records[0]', this.type);
-        // const { id } = this.categories.find((c) => c.title === this.currentCategory);
-        // const categoryData = { id: id, title: this.title };
-        // await this.$store.dispatch('deleteCategory', categoryData);
-        // this.$emit('updated', categoryData);
-        // this.$message({ message: `Category ${this.title} was deleted`, type: 'success' });
+        const id = row.id;
+        await this.$store.dispatch('deleteRecord', id);
+        this.$emit('updated', id);
+        this.$message({ message: `Record ${row.description} was deleted`, type: 'success' });
       } catch (error) {
         this.$message({ message: 'Anything wrong, please repeat', type: 'error' });
       }
     },
     filterType(value, row) {
-      console.log('filterType value', value);
-      // console.log('filterType row', row);
       return row.type === value;
     },
     formatterDate(row) {
