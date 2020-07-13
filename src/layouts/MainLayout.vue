@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Navbar from '@/components/app/Navbar.vue';
-import Sidebar from '@/components/app/Sidebar.vue';
+import Navbar from '@/components/app/Navbar';
+import Sidebar from '@/components/app/Sidebar';
 export default {
   name: 'MainLayout',
   components: {

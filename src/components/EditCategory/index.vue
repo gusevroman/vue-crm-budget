@@ -55,7 +55,6 @@ export default {
     },
   },
   data: () => ({
-    loading: true,
     title: '',
     limit: limitCategory,
     currentCategory: null,
