@@ -40,7 +40,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Operations" width="130" fixed="right">
+      <el-table-column class="operations" label="Operations" width="130" fixed="right">
         <template slot-scope="operations">
           <el-button
             type="primary"
@@ -48,7 +48,7 @@
             circle
             plain
             size="mini"
-            @click="recordView(operations.row)"
+            @click="viewRecord(operations.row)"
           ></el-button>
 
           <el-button
@@ -57,18 +57,25 @@
             circle
             plain
             size="mini"
-            @click="recordEdit(operations.row)"
+            @click.prevent="editRecord(operations.row)"
           ></el-button>
 
-          <el-button
-            type="danger"
-            class="btn-delete"
+          <el-popconfirm
+            confirm-button-text="Delete"
+            cancel-button-text="Cancel"
             icon="el-icon-delete"
-            circle
-            plain
-            size="mini"
-            @click.prevent="recordDelete(operations.row)"
-          ></el-button>
+            title="Confirm the action"
+            @onConfirm="deleteRecord(operations.row)"
+          >
+            <el-button
+              slot="reference"
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              plain
+              size="mini"
+            ></el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -88,13 +95,13 @@ export default {
     loading: true,
   }),
   methods: {
-    recordView(row) {
-      console.log('click - recordView', row);
+    viewRecord(row) {
+      console.log('click - viewRecord', row);
     },
-    recordEdit(row) {
-      console.log('click - recordEdit', row.amount);
+    editRecord(row) {
+      console.log('click - editRecord', row.amount);
     },
-    async recordDelete(row) {
+    async deleteRecord(row) {
       try {
         const id = row.id;
         await this.$store.dispatch('deleteRecord', id);
@@ -136,10 +143,5 @@ export default {
 
 .table {
   font-size: 0.75rem;
-}
-
-.date {
-  font-size: 0.5rem;
-  color: red;
 }
 </style>
