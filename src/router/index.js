@@ -30,12 +30,6 @@ const routes = [
     component: () => import('@/views/Categories'),
   },
   {
-    path: '/detail',
-    name: 'detail',
-    meta: { layout: 'main', requiresAuth: true },
-    component: () => import('@/views/Detail'),
-  },
-  {
     path: '/history',
     name: 'history',
     meta: { layout: 'main', requiresAuth: true },
@@ -58,6 +52,12 @@ const routes = [
     name: 'record',
     meta: { layout: 'main', requiresAuth: true },
     component: () => import('@/views/Record'),
+  },
+  {
+    path: '/record/:id',
+    name: 'recordDetail',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('@/views/RecordDetail'),
   },
   {
     path: '/settings',

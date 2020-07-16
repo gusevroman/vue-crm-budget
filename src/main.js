@@ -10,8 +10,10 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import firebaseConfig from './services/firebase';
+import filterDate from './filters/date.filter';
 
 Vue.use(ElementUI, { locale });
+Vue.filter('filterDate', filterDate);
 Vue.config.productionTip = false;
 
 firebase.initializeApp(firebaseConfig);

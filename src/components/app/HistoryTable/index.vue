@@ -3,7 +3,7 @@
     <el-table
       :data="records"
       class="table"
-      style="max-width: 100%;"
+      style="width: 100%;"
       size="mini"
       :row-class-name="tableRow"
     >
@@ -13,13 +13,13 @@
         prop="date"
         class="date"
         label="Date"
-        width="90"
+        width="120"
         :formatter="formatterDate"
       >
       </el-table-column>
-      <el-table-column prop="amount" sortable class="table" label="Amount" width="100">
+      <el-table-column prop="amount" sortable class="amount" label="$$" width="70">
       </el-table-column>
-      <el-table-column prop="description" class="table" label="Description" width="100">
+      <el-table-column prop="description" class="table" label="Description" min-width="100">
       </el-table-column>
       <el-table-column prop="category" class="table" label="Categories" width="100">
       </el-table-column>
@@ -40,42 +40,39 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column class="operations" label="Operations" width="130" fixed="right">
-        <template slot-scope="operations">
-          <el-button
-            type="primary"
-            icon="el-icon-view"
-            circle
-            plain
-            size="mini"
-            @click="viewRecord(operations.row)"
-          ></el-button>
-
-          <el-button
-            type="warning"
-            icon="el-icon-edit"
-            circle
-            plain
-            size="mini"
-            @click.prevent="editRecord(operations.row)"
-          ></el-button>
-
-          <el-popconfirm
-            confirm-button-text="Delete"
-            cancel-button-text="Cancel"
-            icon="el-icon-delete"
-            title="Confirm the action"
-            @onConfirm="deleteRecord(operations.row)"
-          >
+      <el-table-column class="actions" label="Action" width="80" fixed="right">
+        <template slot-scope="actions">
+          <el-popover placement="top-start" width="40" trigger="hover" content="view detail">
             <el-button
               slot="reference"
-              type="danger"
-              icon="el-icon-delete"
+              type="primary"
+              icon="el-icon-view"
               circle
               plain
               size="mini"
+              @click="viewRecord(actions.row)"
             ></el-button>
-          </el-popconfirm>
+          </el-popover>
+
+          <el-popover placement="top-start" width="40" trigger="hover" content="delete record">
+            <el-popconfirm
+              slot="reference"
+              confirm-button-text="Delete"
+              cancel-button-text="Cancel"
+              icon="el-icon-delete"
+              title="Delete the record?"
+              @onConfirm="deleteRecord(actions.row)"
+            >
+              <el-button
+                slot="reference"
+                type="danger"
+                icon="el-icon-delete"
+                circle
+                plain
+                size="mini"
+              ></el-button>
+            </el-popconfirm>
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -83,6 +80,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import filterDate from '../../../filters/date.filter';
+
 export default {
   name: 'HistoryTable',
   props: {
@@ -94,19 +94,24 @@ export default {
   data: () => ({
     loading: true,
   }),
+  computed: {
+    ...mapGetters(['info']),
+  },
   methods: {
     viewRecord(row) {
-      console.log('click - viewRecord', row);
-    },
-    editRecord(row) {
-      console.log('click - editRecord', row.amount);
+      const id = row.id;
+      this.$router.push(`/record/${id}`);
     },
     async deleteRecord(row) {
       try {
-        const id = row.id;
+        const { id, amount, type, description } = row;
         await this.$store.dispatch('deleteRecord', id);
+
+        const bill = type === 'income' ? this.info.bill - amount : this.info.bill + amount;
+        await this.$store.dispatch('updateInfo', { bill });
+
         this.$emit('updated', id);
-        this.$message({ message: `Record ${row.description} was deleted`, type: 'success' });
+        this.$message({ message: `Record ${description} was deleted`, type: 'success' });
       } catch (error) {
         this.$message({ message: 'Anything wrong, please repeat', type: 'error' });
       }
@@ -115,11 +120,8 @@ export default {
       return row.type === value;
     },
     formatterDate(row) {
-      // const date = new Date(row.date);
-      // console.log('date', date.toDateString());
-      // console.log('date', date.toLocaleDateString());
-      // console.log('date', date.toLocaleTimeString());
-      return row.date.slice(0, 10);
+      const { date } = row;
+      return filterDate(date, 'date');
     },
     tableRow({ row }) {
       return row.type === 'expense' ? 'warning-row' : 'success-row';
@@ -143,5 +145,12 @@ export default {
 
 .table {
   font-size: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

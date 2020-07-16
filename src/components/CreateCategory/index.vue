@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { limitCategory } from '../../services/constants';
+import limitCategory from '../../services/constants';
 
 export default {
   data() {
