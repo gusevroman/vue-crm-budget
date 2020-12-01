@@ -9,7 +9,7 @@ Used for storing data https://firebase.google.com
 
 
 ## Screenshots
-![some screen](/public/img/screenshots) 
+![some screenshots](/assets/screenshots.gif) 
 
 
 ## To start a project:
