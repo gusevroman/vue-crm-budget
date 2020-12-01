@@ -1,24 +1,19 @@
 # vue-crm-budget
 
-## Project setup
+** Personal finance management application concept.
+
+Layout with the principles of responsive layout.
+The stack used was Vue.JS Vuex, https://vuejs.org/
+Used for storing data https://firebase.google.com
+
+
+
+## Screenshots
+![some screen](/public/img/screenshots) 
+
+
+## To start a project:
+
 ```
 yarn install
 ```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
