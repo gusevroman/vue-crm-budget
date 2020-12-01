@@ -9,7 +9,7 @@ Used for storing data https://firebase.google.com
 
 
 ## Screenshots
-![some screenshots](/assets/screenshots.gif) 
+![some screenshots](https://github.com/gusevroman/vue-crm-budget/blob/develop/src/assets/crm-budjet.gif) 
 
 
 ## To start a project:
